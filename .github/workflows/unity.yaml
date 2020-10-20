@@ -1,0 +1,52 @@
+name: Publish LaTeX report
+on: [push]
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v1
+        - uses: webbertakken/unity-builder@<version>
+          env:
+            UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          with:
+            projectPath: ./test
+            unityVersion: ${{ secrets.UNITY_VERSION }}
+            targetPlatform: StandaloneLinux64
+      - name: Publish result
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: build
+    runs-on: windows-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v1
+        - uses: webbertakken/unity-builder@<version>
+          env:
+            UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          with:
+            projectPath: ./test
+            unityVersion: ${{ secrets.UNITY_VERSION }}
+            targetPlatform: StandaloneWindows
+      - name: Publish result
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: build
+    runs-on: macos-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v1
+        - uses: webbertakken/unity-builder@<version>
+          env:
+            UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          with:
+            projectPath: ./test
+            unityVersion: ${{ secrets.UNITY_VERSION }}
+            targetPlatform: StandaloneOSX
+      - name: Publish result
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: build
