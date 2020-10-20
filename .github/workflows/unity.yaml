@@ -1,50 +1,55 @@
-name: Publish LaTeX report
+name: Publish compiled Unity code
 on: [push]
 jobs:
-  build_latex:
+  build_linux:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v1
-        - uses: webbertakken/unity-builder@<version>
-          env:
-            UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          with:
-            projectPath: ./test
-            unityVersion: ${{ secrets.UNITY_VERSION }}
-            targetPlatform: StandaloneLinux64
+      - name: Build Unity
+        uses: webbertakken/unity-builder@v1.0
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: ./test
+          unityVersion: ${{ secrets.UNITY_VERSION }}
+          targetPlatform: StandaloneLinux64
       - name: Publish result
         uses: actions/upload-artifact@v2
         with:
           name: build
           path: build
+  build_win:
     runs-on: windows-latest
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v1
-        - uses: webbertakken/unity-builder@<version>
-          env:
-            UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          with:
-            projectPath: ./test
-            unityVersion: ${{ secrets.UNITY_VERSION }}
-            targetPlatform: StandaloneWindows
+      - name: Build Unity
+        uses: webbertakken/unity-builder@v1.0
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: ./test
+          unityVersion: ${{ secrets.UNITY_VERSION }}
+          targetPlatform: StandaloneWindows
       - name: Publish result
         uses: actions/upload-artifact@v2
         with:
           name: build
           path: build
+  build_mac:
     runs-on: macos-latest
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v1
-        - uses: webbertakken/unity-builder@<version>
-          env:
-            UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          with:
-            projectPath: ./test
-            unityVersion: ${{ secrets.UNITY_VERSION }}
-            targetPlatform: StandaloneOSX
+      - name: Build Unity
+        uses: webbertakken/unity-builder@v1.0
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: ./test
+          unityVersion: ${{ secrets.UNITY_VERSION }}
+          targetPlatform: StandaloneOSX
       - name: Publish result
         uses: actions/upload-artifact@v2
         with:
